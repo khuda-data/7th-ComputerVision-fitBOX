@@ -1,0 +1,3 @@
+# 모델 가중치 및 체크포인트 폴더 무시
+weights/
+checkpoint/
