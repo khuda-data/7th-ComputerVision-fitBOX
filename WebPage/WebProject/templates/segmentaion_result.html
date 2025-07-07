@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>STEP 3: SEGMENTATION 결과</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    body {
+      background: #f7f9fc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+    header {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    header img {
+      max-height: 60px;
+    }
+    h1 {
+      font-size: 2.2rem;
+      color: #333;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .image-pair {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .image-block {
+      flex: 1 1 300px;
+      max-width: 400px;
+      text-align: center;
+    }
+    .image-block h3 {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .image-block img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .btn-container {
+      text-align: center;
+      width: 100%;
+      margin-top: 20px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .btn:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+  </header>
+
+  <h1>STEP 3: SEGMENTATION 결과</h1>
+
+  <div class="image-pair">
+    <div class="image-block">
+      <h3>SEGMENTATION_TOP VIEW</h3>
+      <img src="{{ url_for('static', filename='results/segmentation_top.jpg') }}" alt="Top segmentation result">
+    </div>
+    <div class="image-block">
+      <h3>SEGMENTATION_FRONT VIEW</h3>
+      <img src="{{ url_for('static', filename='results/segmentation_front.jpg') }}" alt="Front segmentation result">
+    </div>
+  </div>
+
+  <div class="btn-container">
+    <form method="POST" action="/transform">
+      <button type="submit" class="btn">패키징 최적화 시작</button>
+    </form>
+  </div>
+
+  {% if result_img %}
+    <div class="image-pair" style="margin-top:40px;">
+      <div class="image-block">
+        <h3>📦 Item 3D Model 변환 결과</h3>
+        <img src="{{ url_for('static', filename='results/' + result_img) }}" alt="3D Model 변환 결과">
+      </div>
+    </div>
+  {% endif %}
+</body>
+</html>

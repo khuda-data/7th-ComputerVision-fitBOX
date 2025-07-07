@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>STEP 2: {{ view_name }} 세그멘테이션</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        body {
+            background: #f7f9fc;
+            display: flex;
+            justify-content: center;
+            padding: 30px 20px;
+        }
+        .seg-container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 900px;
+            width: 100%;
+            padding: 20px 30px;
+        }
+        h2 {
+            font-size: 2rem;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .seg-header {
+            position: relative;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .status-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        #segImage {
+            display: block;
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            border: 2px solid #333;
+            border-radius: 4px;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+        h3 {
+            font-size: 1.2rem;
+            color: #333;
+            margin: 20px 0 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background: #e0e7ff;
+            font-weight: bold;
+        }
+        button {
+            display: block;
+            margin: 0 auto;
+            padding: 14px 32px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="seg-container">
+        <h2>STEP 2: {{ view_name }} 클릭하여 객체 선택</h2>
+
+        <div class="seg-header">
+            <div class="status-badge">{{ status_msg }}</div>
+            <img
+                id="segImage"
+                src="{{ url_for('static', filename='previews/' + img_file + '.png') }}"
+                alt="Segmentation Preview"
+            >
+        </div>
+
+        <h3>🖱️ 조작 안내</h3>
+        <table>
+            <thead>
+                <tr><th>동작</th><th>방법</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>✅ segment 클릭</td><td>마우스로 이미지 클릭</td></tr>
+                <tr><td>👀 segment 미리보기</td><td>클릭하면 초록색 preview mask 표시</td></tr>
+                <tr><td>🔒 확정</td><td><code>Enter</code> 키 누르면 확정 → 빨간색 mask로 변경</td></tr>
+                <tr><td>↩️ Undo</td><td><code>u</code> 키 누르면 마지막 확정 취소</td></tr>
+                <tr><td>🛑 종료</td><td><code>ESC</code> 키 누르면 세그멘테이션 종료 및 최종 결과 출력</td></tr>
+            </tbody>
+        </table>
+
+        <button>SEGMENTATION 완료</button>
+    </div>
+
+    <script>
+    document.getElementById('segImage').addEventListener('click', function() {
+        fetch('/click', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ view: "{{ view_name }}" })
+        })
+        .then(res => res.json())
+        .then(data => {
+            window.location.href = data.redirect;
+        });
+    });
+    </script>
+</body>
+</html>

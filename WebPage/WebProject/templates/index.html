@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KHUDA - 이미지 업로드</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        body {
+            background: #f7f9fc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            min-height: 100vh;
+        }
+        header {
+            width: 100%;
+            max-width: 900px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        header img {
+            max-height: 60px;
+        }
+        h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        form.upload-form {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        .form-group input[type="file"] {
+            width: 100%;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 14px 0;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- static/logo.png가 fitBox 로고 파일이라면 그대로 두세요 -->
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+    </header>
+
+    <h2>박스에 넣고자 하는 item들을<br>정면/측면에서 찍은 사진을 업로드해주세요!</h2>
+
+    <form class="upload-form" id="uploadForm" method="POST" action="/upload" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="front_img">Front View 이미지 선택</label>
+            <input type="file" id="front_img" name="front_img" accept="image/*" required>
+        </div>
+        <div class="form-group">
+            <label for="top_img">Top View 이미지 선택</label>
+            <input type="file" id="top_img" name="top_img" accept="image/*" required>
+        </div>
+        <button type="submit">업로드 및 시작</button>
+    </form>
+</body>
+</html>

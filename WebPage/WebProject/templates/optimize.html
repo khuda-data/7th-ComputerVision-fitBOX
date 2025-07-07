@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>박스 선택 화면</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 구글 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        body {
+            background: #f7f9fc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        /* 안내 문구 */
+        #message {
+            font-size: 1.6rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        /* 박스 선택 이미지 */
+        #choiceImage {
+            max-width: 800px;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        #choiceImage:hover {
+            transform: scale(1.02);
+        }
+        /* 로딩 스피너 */
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+        }
+        #spinner {
+            border: 12px solid #f3f3f3;
+            border-top: 12px solid #007bff;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            animation: spin 1.5s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #statusMessage {
+            font-size: 1.1rem;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 초기 문구 -->
+    <h2 id="message">item을 최적화할 박스를 선택해주세요!</h2>
+
+    <!-- 선택 이미지 (원본 로직 그대로) -->
+    <img
+      id="choiceImage"
+      src="{{ url_for('static', filename='images/choice.png') }}"
+      alt="Box Choice Image"
+    >
+
+    <!-- 로딩 중 표시 -->
+    <div id="loading">
+        <div id="spinner"></div>
+        <div id="statusMessage">최적화 진행 중입니다</div>
+    </div>
+
+    <script>
+        document.getElementById('choiceImage').addEventListener('click', function() {
+            // 원본 로직: 메시지/이미지 숨기고 로딩 보이기
+            document.getElementById('message').style.display = 'none';
+            document.getElementById('choiceImage').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+
+            // 원본 상태 메시지 배열
+            let statusMessages = [
+                "최적화 진행 중입니다",
+                "1-1호 최적화 중입니다",
+                "2호 최적화 중입니다",
+                "2-1호 최적화 중입니다"
+            ];
+            let index = 0;
+            let statusElem = document.getElementById('statusMessage');
+
+            let interval = setInterval(function() {
+                if (index < statusMessages.length) {
+                    statusElem.textContent = statusMessages[index];
+                    index++;
+                } else {
+                    clearInterval(interval);
+                    // 결과 페이지로 이동 (원본 경로)
+                    window.location.href = '/show_final_result';
+                }
+            }, 2000);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEP 4: 변환 결과</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Noto Sans KR',sans-serif; }
+        body {
+            background: #f7f9fc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            min-height: 100vh;
+        }
+        header { width:100%; max-width:900px; text-align:center; margin-bottom:30px; }
+        header img { max-height:40px; }
+        h1 {
+            font-size: 2.2rem;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        img {
+            max-width: 90%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0,0,0,.1);
+            display: block;
+            margin: 20px auto;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background .3s;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn:hover { background: #0056b3; }
+        .content { width:100%; max-width:900px; text-align:center; }
+        form { margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+    </header>
+
+    <main class="content">
+        <h1>STEP 4: 아이템 3D 모델 변환 결과</h1>
+
+        <img src="{{ url_for('static', filename='results/' + result_img) }}" alt="3D Model 변환 결과">
+
+        <form method="GET" action="/optimize">
+            <button type="submit" class="btn">최적화 진행하기</button>
+        </form>
+    </main>
+</body>
+</html>
